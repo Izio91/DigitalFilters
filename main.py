@@ -1,10 +1,7 @@
+import numpy as np
 from AverageDigitalFilter import AverageDigitalFilter
 from MedianDigitalFilter import MedianDigitalFilter
 
-averageFilter = AverageDigitalFilter()
-medianFilter = MedianDigitalFilter(3, 5)
-
-print(averageFilter.get_height(), averageFilter.get_width())
-print(medianFilter.get_height(), medianFilter.get_width())
-averageFilter.apply_to_image(5)
-medianFilter.apply_to_image(10)
+averageFilter = AverageDigitalFilter(3, 3)
+image = np.ones((1024, 1024))
+print(averageFilter.apply_to_image(image))

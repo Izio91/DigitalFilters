@@ -7,7 +7,7 @@ class Filter(ABC):
         self.__digitalFilter = self.make_digital_filter(height, width)
 
     @abstractmethod
-    def make_digital_filter(self):
+    def make_digital_filter(self, height, width):
         raise NotImplementedError("You should implement filter first!")
 
     def get_height(self):
@@ -17,4 +17,4 @@ class Filter(ABC):
         return self.__digitalFilter.get_height()
 
     def apply_to_image(self, image):
-        self.__digitalFilter.apply(image)
+        return self.__digitalFilter.apply(image)
