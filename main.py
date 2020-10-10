@@ -1,7 +1,6 @@
 import numpy as np
-from AverageDigitalFilter import AverageDigitalFilter
-from MedianDigitalFilter import MedianDigitalFilter
+from AverageFilter import Average
 
-averageFilter = AverageDigitalFilter(3, 3)
-image = np.ones((1024, 1024))
+averageFilter = Average(3, 3)
+image = np.ones((10, 5))
 print(averageFilter.apply_to_image(image))
