@@ -47,28 +47,30 @@ class Average:
         return errorMsg, result
 
     def fill_frame(self, image):
+        number_of_rows_image = image[:, 0].size
+        number_of_columns_image = image[0, :].size
         self.calculate_dimensions_for_each_side_frame()
 
-        output = np.zeros((image[0, :].size, image[:, 0].size))
+        output = np.zeros((number_of_rows_image, number_of_columns_image))
         if self.__up_side_frame != 0:
             """ fill upside of frame"""
             for i in range(0, self.__up_side_frame):
-                for j in range(0, image[0, :].size):
+                for j in range(0, number_of_columns_image):
                     output[i, j] = image[i, j]
         if self.__down_side_frame != 0:
             """ fill down_side of frame"""
-            for i in range(image[:, 0].size - self.__down_side_frame, image[:, 0].size):
-                for j in range(0, image[0, :].size):
+            for i in range(number_of_rows_image - self.__down_side_frame, number_of_rows_image):
+                for j in range(0, number_of_columns_image):
                     output[i, j] = image[i, j]
         if self.__left_side_frame != 0:
             """ fill left_side of frame"""
-            for i in range(self.__up_side_frame, image[:, 0].size - self.__down_side_frame):
+            for i in range(self.__up_side_frame, number_of_rows_image - self.__down_side_frame):
                 for j in range(0, self.__left_side_frame):
                     output[i, j] = image[i, j]
         if self.__right_side_frame != 0:
             """ fill right_side of frame"""
-            for i in range(self.__up_side_frame, image[:, 0].size - self.__down_side_frame):
-                for j in range(image[0, :].size - self.__right_side_frame, image[0, :].size):
+            for i in range(self.__up_side_frame, number_of_rows_image - self.__down_side_frame):
+                for j in range(number_of_columns_image - self.__right_side_frame, number_of_columns_image):
                     output[i, j] = image[i, j]
 
         return output
@@ -82,17 +84,9 @@ class Average:
         self.__down_side_frame = self.__height - row_of_middle_pixel_inside_kernel - 1
 
     def make_convolution(self, image, output):
-        average = 1/(self.__width * self.__height)
-        starting_row = int(self.__height / 2)
-        starting_column = int(self.__width / 2)
-        ending_row = image[:, 0].size - self.__down_side_frame
-        ending_column = image[0, :].size - self.__right_side_frame
 
-        for i in range(starting_row, ending_row):
-            for j in range(starting_column, ending_column):
-                sum = 0
-                for q in range(i - self.__up_side_frame, i + self.__down_side_frame):
-                    for r in range(j - self.__left_side_frame, j + self.__right_side_frame):
-                        sum = sum + image[q, r]
-                output[i, j] = sum * average
         return output
+
+avg = Average(3, 3)
+image = np.ones((10, 5))
+print(avg.apply(image))
