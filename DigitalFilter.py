@@ -15,7 +15,7 @@ class Filter(ABC):
 
     @abstractmethod
     def make_convolution(self, image, output):
-        raise NotImplementedError("You should implement filter first!")
+        raise NotImplementedError("You should implement method first!")
 
     def get_height(self):
         return self.__height
