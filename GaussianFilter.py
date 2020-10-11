@@ -24,18 +24,18 @@ class Gaussian(Filter):
 
     def make_kernel(self):
         self.set_standard_deviation()
-        samples = abs(np.random.normal(0.0, self.__standard_deviation, (self.get_height() * self.get_width())))
-        samples = self.normalize_samples(samples)
+        samples = sorted(abs(np.random.normal(0.0, self.__standard_deviation, (self.get_height() * self.get_width()))),
+                         reverse=True)
+        samples = self.rescale_samples(samples)
         self.__kernel = self.fill_kernel(samples)
 
     def set_standard_deviation(self):
         self.__standard_deviation = (self.get_width() + 1) / 5
 
-    def normalize_samples(self, samples):
+    def rescale_samples(self, samples):
         min_sample = min(samples)
-        max_sample = max(samples)
-        result = samples / (max_sample * min_sample)
-        return sorted(result.astype(int), reverse=True)
+        rescaled_samples = samples / min_sample
+        return rescaled_samples.astype(int)
 
     def fill_kernel(self, samples):
         x_coordinate_of_middle_kernel = int(self.get_height() / 2)
