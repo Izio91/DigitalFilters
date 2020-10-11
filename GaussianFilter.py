@@ -1,12 +1,18 @@
 from DigitalFilter import Filter
 import numpy as np
+import scipy.stats as st
 
 class Gaussian(Filter):
     __standard_deviation = 0
     __kernel = None
 
-    def make_convolution(self, image, output):
+    def __init__(self, size=3):
+        self.set_height(size)
+        self.set_width(size)
         self.make_kernel()
+        print(self.__kernel)
+
+    def make_convolution(self, image, output):
         starting_row = int(self.get_height() / 2)
         starting_column = int(self.get_width() / 2)
         ending_row = image[:, 0].size - self.get_down_side_frame()
@@ -19,58 +25,19 @@ class Gaussian(Filter):
                         row_kernel = q - i + self.get_up_side_frame()
                         column_kernel = r - j + self.get_left_side_frame()
                         convolution = convolution + (self.__kernel[row_kernel, column_kernel] * image[q, r])
-                output[i, j] = convolution
+                output[i, j] = int(convolution)
         return output
 
     def make_kernel(self):
+        """Returns a 2D Gaussian kernel."""
         self.set_standard_deviation()
-        samples = sorted(abs(np.random.normal(0.0, self.__standard_deviation, (self.get_height() * self.get_width()))),
-                         reverse=True)
-        samples = self.rescale_samples(samples)
-        self.__kernel = self.fill_kernel(samples)
+        x = np.linspace(-self.__standard_deviation, self.__standard_deviation, self.get_height() + 1)
+        kern1d = np.diff(st.norm.cdf(x))
+        kern2d = np.outer(kern1d, kern1d)
+        self.__kernel = kern2d / kern2d.sum()
+        self.__kernel = self.__kernel / self.__kernel[0, 0]
+        self.__kernel = self.__kernel / self.__kernel.sum()
 
     def set_standard_deviation(self):
         self.__standard_deviation = (self.get_width() + 1) / 5
 
-    def rescale_samples(self, samples):
-        min_sample = min(samples)
-        rescaled_samples = samples / min_sample
-        return rescaled_samples.astype(int)
-
-    def fill_kernel(self, samples):
-        x_coordinate_of_middle_kernel = int(self.get_height() / 2)
-        if int(self.get_height()) % 2 == 0:
-            x_coordinate_of_middle_kernel = x_coordinate_of_middle_kernel - 1
-        y_coordinate_of_middle_kernel = int(self.get_width() / 2)
-        if int(self.get_width()) % 2 == 0:
-            y_coordinate_of_middle_kernel = y_coordinate_of_middle_kernel - 1
-        left_index = (self.get_width() * x_coordinate_of_middle_kernel) + x_coordinate_of_middle_kernel
-        right_index = left_index
-        tmp_list = np.ones(len(samples))
-        index = 0
-        while index < len(samples):
-            if (left_index >= 0 and right_index < len(samples)):
-                if (left_index == right_index):
-                    if (samples[index] != 0):
-                        tmp_list[left_index] = samples[index]
-                    index = index + 1
-                else:
-                    if (samples[index] != 0):
-                        tmp_list[left_index] = samples[index]
-                    index = index + 1
-                    if (samples[index] != 0):
-                        tmp_list[right_index] = samples[index]
-                    index = index + 1
-                left_index = left_index - 1
-                right_index = right_index + 1
-            else:
-                if (left_index >= 0):
-                    if (samples[index] != 0):
-                        tmp_list[left_index] = samples[index]
-                    left_index = left_index - 1
-                else:
-                    if (samples[index] != 0):
-                        tmp_list[right_index] = samples[index]
-                    right_index = right_index + 1
-                index = index + 1
-        return np.reshape(tmp_list.astype(int), (self.get_height(), self.get_width()))

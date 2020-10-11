@@ -10,12 +10,18 @@ class Filter(ABC):
     __right_side_frame = 0
 
     def __init__(self, height=3, width=3):
-        self.__height = height
-        self.__width = width
+        self.set_height(height)
+        self.set_width(width)
 
     @abstractmethod
     def make_convolution(self, image, output):
         raise NotImplementedError("You should implement method first!")
+
+    def set_height(self, height):
+        self.__height = height
+
+    def set_width(self, width):
+        self.__width = width
 
     def get_height(self):
         return self.__height

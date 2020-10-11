@@ -1,6 +1,6 @@
 from DigitalFilter import Filter
 
-class Average(Filter):
+class Mean(Filter):
     def make_convolution(self, image, output):
         average = 1/(self.get_width() * self.get_height())
         starting_row = int(self.get_height() / 2)
