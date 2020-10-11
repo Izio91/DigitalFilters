@@ -1,16 +1,16 @@
 import numpy as np
-from AverageFilter import Average
+from MeanFilter import Mean
 from GaussianFilter import Gaussian
 from MedianFilter import Median
 
-"""averageFilter = Average(3, 3)
+"""meanFilter = Mean(3, 3)
 image = np.ones((1024, 1024))
-print(averageFilter.apply_to_image(image))"""
+print(meanFilter.apply_to_image(image))"""
 
-"""gaussianFilter = Gaussian(3, 3)
-image = np.ones((100, 100))
-print(gaussianFilter.apply_to_image(image))"""
+gaussianFilter = Gaussian(5)
+image = np.ones((100, 100))*255
+print(gaussianFilter.apply_to_image(image))
 
-medianFilter = Median(3, 3)
+"""medianFilter = Median(3, 3)
 image = np.ones((100, 100))
-print(medianFilter.apply_to_image(image))
+print(medianFilter.apply_to_image(image))"""
