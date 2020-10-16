@@ -10,7 +10,6 @@ class Gaussian(Filter):
         self.set_height(size)
         self.set_width(size)
         self.make_kernel()
-        print(self.__kernel)
 
     def make_convolution(self, image, output):
         starting_row = int(self.get_height() / 2)
