@@ -3,7 +3,6 @@ import statistics
 
 class Median(Filter):
     def make_convolution(self, image, output):
-        self.create_kernel()
         starting_row = int(self.get_height() / 2)
         starting_column = int(self.get_width() / 2)
         ending_row = image[:, 0].size - self.get_down_side_frame()
