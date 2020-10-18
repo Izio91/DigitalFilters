@@ -1,5 +1,6 @@
 import numpy as np
 from DigitalFilter import Filter
+from Utilities import show_image
 
 class Sharpening(Filter):
     __kernel = None
@@ -10,27 +11,19 @@ class Sharpening(Filter):
         self.make_kernel()
 
     def make_kernel(self):
-        self.__kernel = np.zeros((self.get_height(), self.get_width()))
+        self.__kernel = np.ones((self.get_height(), self.get_width()))
         row_of_middle_pixel_inside_kernel = int(self.get_height() / 2)
         column_of_middle_pixel_inside_kernel = int(self.get_width() / 2)
 
-        self.__kernel[row_of_middle_pixel_inside_kernel, column_of_middle_pixel_inside_kernel] = -4
-        for i in range(self.get_height()):
-            if i != row_of_middle_pixel_inside_kernel:
-                self.__kernel[i, column_of_middle_pixel_inside_kernel] = 1
-        for j in range(self.get_width()):
-            if j != column_of_middle_pixel_inside_kernel:
-                self.__kernel[row_of_middle_pixel_inside_kernel, j] = 1
+        self.__kernel[row_of_middle_pixel_inside_kernel, column_of_middle_pixel_inside_kernel] = -8
 
     def make_convolution(self, image, output):
-        first_derivative = np.copy(output)
-        second_derivative = np.copy(output)
-        first_derivative = self.apply_derivative(image, first_derivative)
-        second_derivative = self.apply_derivative(first_derivative, second_derivative)
-        output = image + first_derivative - second_derivative
+        laplacian_mask = self.apply_derivative(image)
+        output = image - laplacian_mask
         return output
 
-    def apply_derivative(self, image, output):
+    def apply_derivative(self, image):
+        laplacian_mask = np.zeros(image.shape)
         starting_row = int(self.get_height() / 2)
         starting_column = int(self.get_width() / 2)
         ending_row = image[:, 0].size - self.get_down_side_frame()
@@ -43,5 +36,5 @@ class Sharpening(Filter):
                         row_kernel = q - i + self.get_up_side_frame()
                         column_kernel = r - j + self.get_left_side_frame()
                         convolution = convolution + (self.__kernel[row_kernel, column_kernel] * image[q, r])
-                output[i, j] = int(convolution)
-        return output
+                laplacian_mask[i, j] = int(convolution)
+        return laplacian_mask
