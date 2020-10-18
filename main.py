@@ -4,17 +4,18 @@ from GaussianFilter import Gaussian
 from MedianFilter import Median
 from ConservativeSmoothing import ConservativeSmoo
 from SharpeningFilter import Sharpening
+from UnsharpeningFilter import Unsharpening
 from AdaptiveLocalNoiseFilter import LocalNoise
 from Utilities import read_image
 from Utilities import show_image
 
-path='./images/1577x1365.png'
+path= 'images/1577x1365.png'
 image = read_image(path)
 show_image(image)
 """meanFilter = Mean(3, 3)
 output = meanFilter.apply_to_image(image)"""
 
-"""gaussianFilter = Gaussian(7)
+"""gaussianFilter = Gaussian(3)
 output = gaussianFilter.apply_to_image(image)
 show_image(output)"""
 
@@ -30,8 +31,10 @@ show_image(output)"""
 output = localNoise.apply_to_image(image)
 show_image(output)"""
 
-sharpening = Sharpening(3)
-gaussian = Gaussian(3)
-#image = gaussian.apply_to_image(image)
+"""sharpening = Sharpening()
 output = sharpening.apply_to_image(image)
+show_image(output)"""
+
+unsharpening = Unsharpening(5)
+output = unsharpening.apply_to_image(image)
 show_image(output)
