@@ -70,8 +70,8 @@ class Filter(ABC):
         return errorMsg, result
 
     def fill_frame(self, image):
-        number_of_rows_image = image[:, 0].size
-        number_of_columns_image = image[0, :].size
+        number_of_rows_image = image.shape[0]
+        number_of_columns_image = image.shape[1]
         self.calculate_dimensions_for_each_side_frame()
 
         output = np.zeros((number_of_rows_image, number_of_columns_image))
