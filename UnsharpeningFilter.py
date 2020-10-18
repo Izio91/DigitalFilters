@@ -1,4 +1,3 @@
-import numpy as np
 from DigitalFilter import Filter
 from GaussianFilter import Gaussian
 

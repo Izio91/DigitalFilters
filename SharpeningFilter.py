@@ -1,6 +1,5 @@
 import numpy as np
 from DigitalFilter import Filter
-from Utilities import show_image
 
 class Sharpening(Filter):
     __kernel = None
