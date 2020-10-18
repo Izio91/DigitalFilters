@@ -5,7 +5,8 @@ from Utilities import show_image
 class Sharpening(Filter):
     __kernel = None
 
-    def __init__(self, size=3):
+    def __init__(self):
+        size = 3
         self.set_height(size)
         self.set_width(size)
         self.make_kernel()
