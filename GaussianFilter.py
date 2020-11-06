@@ -32,19 +32,10 @@ class Gaussian(Filter):
         for i in range(starting_row, ending_row):
             for j in range(starting_column, ending_column):
                 convolution = 0
-                if(i == 0):
-                    print("i:", i)
-                    print("j:", j)
-                    print("up side frame:",self.get_up_side_frame())
-                    print("start q:", i - self.get_up_side_frame(),"end q:", i - self.get_up_side_frame() + self.get_height())
-                    print("get_left_side_frame:", self.get_left_side_frame())
-                    print("self.get_width():", self.get_width())
-                    print("start r:", j - self.get_left_side_frame(),"end r:", j - self.get_left_side_frame() + self.get_width())
                 for q in range(i - self.get_up_side_frame(), i - self.get_up_side_frame() + self.get_height()):
                     for r in range(j - self.get_left_side_frame(), j - self.get_left_side_frame() + self.get_width()):
                         row_kernel = q - i + self.get_up_side_frame()
                         column_kernel = r - j + self.get_left_side_frame()
-                        #print(r)
                         convolution = convolution + (self.__kernel[row_kernel, column_kernel] * image[q, r])
                 output[i, j] = convolution
         return output.astype(np.uint8)
