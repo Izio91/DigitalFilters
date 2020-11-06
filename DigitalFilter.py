@@ -64,7 +64,7 @@ class Filter(ABC):
 
     def check_dimensions(self, errorMsg, image):
         result = True
-        if self.__width > image[0, :].size or self.__height > image[:, 0].size:
+        if self.__width > image.shape[1] or self.__height > image.shape[0]:
             result = False
             errorMsg = errorMsg + "Dimensions are not compatibles\n"
         return errorMsg, result
@@ -74,7 +74,11 @@ class Filter(ABC):
         number_of_columns_image = image.shape[1]
         self.calculate_dimensions_for_each_side_frame()
 
-        output = np.zeros((number_of_rows_image, number_of_columns_image))
+        if (len(image.shape) != 2):
+            number_of_scales = image.shape[2]
+            output = np.zeros((number_of_rows_image, number_of_columns_image, number_of_scales))
+        else:
+            output = np.zeros((number_of_rows_image, number_of_columns_image))
         if self.__up_side_frame != 0:
             """ fill upside of frame"""
             for i in range(0, self.__up_side_frame):
