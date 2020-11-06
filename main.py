@@ -14,15 +14,17 @@ import cv2
 path= 'images/1577x1365.png'
 path= 'images/745x419.jpg'
 #path= 'images/306x341.png'
-color_scale = "rgb"
+#path= 'images/402x588.png'
+
+color_scale = "gray"
 title1 = "Original"
 image = read_image(path, color_scale)
 """title2 = "Average"
 meanFilter = Mean(5, 5)
 output = meanFilter.apply_to_image(image)"""
 
-"""
-title2 = "Gaussian"
+
+"""title2 = "Gaussian"
 gaussianFilter = Gaussian(3)
 output = gaussianFilter.apply_to_image(image)"""
 
@@ -34,14 +36,13 @@ output = medianFilter.apply_to_image(image)"""
 
 """title2 = "Conservative Smoothing"
 conservativeSmoo = ConservativeSmoo(5, 5)
-output = conservativeSmoo.apply_to_image(image)
-"""
+output = conservativeSmoo.apply_to_image(image)"""
 
 
 """title2 = "Adaptive"
 localNoise = LocalNoise(3, 3)
-output = localNoise.apply_to_image(image)
-"""
+output = localNoise.apply_to_image(image)"""
+
 
 title2 = "Sharpening"
 gaussianFilter = Gaussian(3)

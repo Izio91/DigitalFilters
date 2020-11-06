@@ -24,12 +24,8 @@ class LocalNoise(Filter):
             sat_noise_variance = np.average(self.__local_variance_matrix[:, :, 1])
             val_noise_variance = np.average(self.__local_variance_matrix[:, :, 2])
 
-            print(hue_noise_variance)
-            print(sat_noise_variance)
-            print(val_noise_variance)
         else:
             gray_noise_variance = np.average(self.__local_variance_matrix)
-            print(gray_noise_variance)
 
         for i in range(self.__local_variance_matrix.shape[0]):
             for j in range(self.__local_variance_matrix.shape[1]):
