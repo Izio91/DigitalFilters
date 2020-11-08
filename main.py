@@ -9,14 +9,24 @@ from AdaptiveLocalNoiseFilter import LocalNoise
 from Utilities import read_image
 from Utilities import show_image
 from Utilities import show_couple_of_images
-import cv2
+
+#test = np.array(([1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20],[21,22,23,24,25]))
+"""test = np.array(([[1,2,3],[4,5,6],[7,8,9]],[[10,11,12],[13,14,15],[16,17,18]],[[19,20,21],[22,23,24],[25,26,27]]))
+print(test)
+print(test[1:4,1:4])
+row_in_the_middle = 4-1 -1
+column_in_the_middle = 4-1 -1
+value_in_the_middle = test[row_in_the_middle, column_in_the_middle]"""
+#convolution = np.sum(test[1:4,1:4]) - (9*test[row_in_the_middle, column_in_the_middle])
+#print(convolution)
+#print(np.array([np.sum(test[:, :, 0]), np.sum(test[:, :, 1]), np.sum(test[:, :, 2])]))
 
 path= 'images/1577x1365.png'
 path= 'images/745x419.jpg'
 #path= 'images/306x341.png'
 #path= 'images/402x588.png'
 
-color_scale = "gray"
+color_scale = "rgb"
 title1 = "Original"
 image = read_image(path, color_scale)
 """title2 = "Average"
